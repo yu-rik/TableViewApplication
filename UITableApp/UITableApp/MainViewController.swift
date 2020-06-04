@@ -31,12 +31,20 @@ class MainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Jacheyka", for: indexPath)
         cell.textLabel?.text = restaurantsName[indexPath.row]
         cell.imageView?.image = UIImage(named: restaurantsName[indexPath.row])
+        cell.imageView?.layer.cornerRadius = (cell.frame.size.height)/2
+        cell.imageView?.clipsToBounds = true
         
 
         return cell
     }
     
-
+    // MARK: - TableViewDelegate
+     //метод возвращает высоту строки
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
+    }
+    
+    
    /*
     // MARK: - Navigation
 
