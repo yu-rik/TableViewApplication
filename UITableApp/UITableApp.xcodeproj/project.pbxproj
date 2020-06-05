@@ -14,6 +14,7 @@
 		7A2817EC2487BEEC001EC07C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A2817EB2487BEEC001EC07C /* Assets.xcassets */; };
 		7A2817EF2487BEEC001EC07C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A2817ED2487BEEC001EC07C /* LaunchScreen.storyboard */; };
 		7A7AD38E24884E21006AE3FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7AD38D24884E21006AE3FE /* MainViewController.swift */; };
+		7AC02A8D248AEEFA008E905A /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC02A8C248AEEFA008E905A /* PlaceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7A2817EE2487BEEC001EC07C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A2817F02487BEEC001EC07C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A7AD38D24884E21006AE3FE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		7AC02A8C248AEEFA008E905A /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				7A2817E22487BEEB001EC07C /* AppDelegate.swift */,
 				7A7AD38D24884E21006AE3FE /* MainViewController.swift */,
+				7AC02A8C248AEEFA008E905A /* PlaceModel.swift */,
 				7A101BD2248A66130009191E /* CustomTableViewCell.swift */,
 				7A2817E42487BEEB001EC07C /* SceneDelegate.swift */,
 				7A2817E82487BEEB001EC07C /* Main.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				7A7AD38E24884E21006AE3FE /* MainViewController.swift in Sources */,
 				7A2817E32487BEEB001EC07C /* AppDelegate.swift in Sources */,
+				7AC02A8D248AEEFA008E905A /* PlaceModel.swift in Sources */,
 				7A101BD3248A66130009191E /* CustomTableViewCell.swift in Sources */,
 				7A2817E52487BEEB001EC07C /* SceneDelegate.swift in Sources */,
 			);

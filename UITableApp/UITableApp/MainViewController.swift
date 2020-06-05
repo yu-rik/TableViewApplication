@@ -10,9 +10,9 @@ import UIKit
 
 class MainViewController: UITableViewController {
 
-    let restaurantsName = ["Puzata hata","Napaleon hill","Big mac","Stolovaya #5","Uzbek","Proreznaya","Ludmila","Oaza","Partenit","Semeiz","Vepr",
-                           "Velyka bochka","Praga","London","Toronto"]
+
     
+    let places = Place.getPlaces()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,14 +23,16 @@ class MainViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return restaurantsName.count
+       return places.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Jacheyka", for: indexPath) as! CustomTableViewCell
-        cell.nameLabel.text = restaurantsName[indexPath.row]
-        cell.imageOfPlace.image = UIImage(named: restaurantsName[indexPath.row])
+        cell.nameLabel.text = places[indexPath.row].name
+        cell.locationLabel.text = places[indexPath.row].location
+        cell.typeLabel.text = places[indexPath.row].type
+        cell.imageOfPlace.image = UIImage(named: places[indexPath.row].image)
         cell.imageOfPlace.layer.cornerRadius = (cell.imageOfPlace.frame.size.height)/2 //cell.frame.size.height -значение высоты ячейки родительского класса UITableViewCell
         cell.imageOfPlace.clipsToBounds = true
         
@@ -38,12 +40,12 @@ class MainViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - TableViewDelegate
-     //метод возвращает высоту строки
+   /* // MARK: - TableViewDelegate
+     //метод возвращает высоту строки, если выcоту строки указывать в storyboard, то этот метод не нужен
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
-    
+    */
     
    /*
     // MARK: - Navigation
