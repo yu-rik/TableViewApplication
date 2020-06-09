@@ -10,6 +10,7 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
 
+    @IBOutlet weak var imageOfPlace: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -35,16 +36,7 @@ class NewPlaceViewController: UITableViewController {
             view.endEditing(true)
         }
     }
-   //MARK: Work with Image
-    func chooseImagePicker(source: UIImagePickerController.SourceType){
-        if UIImagePickerController.isSourceTypeAvailable(source){
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = true //позволяет редактировать фото пользователю
-            imagePicker.sourceType = source
-            present(imagePicker, animated: true)
-            
-        }
-    }
+  
 }
 //MARK: TextFieldDelegate
 extension NewPlaceViewController : UITextFieldDelegate {
@@ -53,5 +45,24 @@ extension NewPlaceViewController : UITextFieldDelegate {
         return true
     }
 }
+  
+//MARK: Work with Image
+extension NewPlaceViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
-
+       func chooseImagePicker(source: UIImagePickerController.SourceType){
+           if UIImagePickerController.isSourceTypeAvailable(source){
+               let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+               imagePicker.allowsEditing = true //позволяет редактировать фото пользователю
+               imagePicker.sourceType = source
+               present(imagePicker, animated: true)
+        }
+       }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imageOfPlace.image = info[.editedImage] as? UIImage
+        imageOfPlace.contentMode = .scaleAspectFit
+        imageOfPlace.clipsToBounds = true
+        dismiss(animated: true)
+    }
+}
