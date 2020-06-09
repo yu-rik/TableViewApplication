@@ -18,13 +18,22 @@ class NewPlaceViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
+            let cameraIicon = #imageLiteral(resourceName: "camera") //иконка алерта для меню пункта камера
+            let photoIcon = #imageLiteral(resourceName: "photo")  //иконка алерта для меню пункта фото
+            
+            
             let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let camera = UIAlertAction(title: "Camera", style: .default) { _ in
                 self.chooseImagePicker(source: .camera)
             }
+            camera.setValue(cameraIicon, forKey: "image") //добавление иконки
+            camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+            
             let photo = UIAlertAction(title: "Photo", style: .default) { _ in
                 self.chooseImagePicker(source: .photoLibrary)
             }
+            photo.setValue(photoIcon, forKey: "image")
+            photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             
             actionSheet.addAction(camera)
