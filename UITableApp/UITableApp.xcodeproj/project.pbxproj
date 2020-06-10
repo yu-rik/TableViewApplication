@@ -62,11 +62,9 @@
 		7A2817E12487BEEB001EC07C /* UITableApp */ = {
 			isa = PBXGroup;
 			children = (
+				7ACB87382490C5E300337337 /* MyPlacesController */,
+				7ACB87392490C64800337337 /* NewPlaceController */,
 				7A2817E22487BEEB001EC07C /* AppDelegate.swift */,
-				7A7AD38D24884E21006AE3FE /* MainViewController.swift */,
-				7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */,
-				7AC02A8C248AEEFA008E905A /* PlaceModel.swift */,
-				7A101BD2248A66130009191E /* CustomTableViewCell.swift */,
 				7A2817E42487BEEB001EC07C /* SceneDelegate.swift */,
 				7A2817E82487BEEB001EC07C /* Main.storyboard */,
 				7A2817EB2487BEEC001EC07C /* Assets.xcassets */,
@@ -74,6 +72,24 @@
 				7A2817F02487BEEC001EC07C /* Info.plist */,
 			);
 			path = UITableApp;
+			sourceTree = "<group>";
+		};
+		7ACB87382490C5E300337337 /* MyPlacesController */ = {
+			isa = PBXGroup;
+			children = (
+				7A7AD38D24884E21006AE3FE /* MainViewController.swift */,
+				7A101BD2248A66130009191E /* CustomTableViewCell.swift */,
+			);
+			path = MyPlacesController;
+			sourceTree = "<group>";
+		};
+		7ACB87392490C64800337337 /* NewPlaceController */ = {
+			isa = PBXGroup;
+			children = (
+				7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */,
+				7AC02A8C248AEEFA008E905A /* PlaceModel.swift */,
+			);
+			path = NewPlaceController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

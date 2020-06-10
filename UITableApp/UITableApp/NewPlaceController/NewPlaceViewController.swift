@@ -9,13 +9,30 @@
 import UIKit
 
 class NewPlaceViewController: UITableViewController {
+    var newPlace: Place? // экземпляр структуры Place
+    var imageIsChanged = false // дополнительное свойство на случай если пользователь не добавит свое изображение
 
-    @IBOutlet weak var imageOfPlace: UIImageView!
+   
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var placeImage: UIImageView!
+    @IBOutlet weak var placeName: UITextField!
+    @IBOutlet weak var placeLocation: UITextField!
+    @IBOutlet weak var placeType: UITextField!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        saveButton.isEnabled = false
+        
+        //отслеживвание внесения данных в поле textFieldName и включение/выключение кнопки Save
+        placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // при редактировании поля textFieldName вызывается метод textFieldChanged
+        
     }
-
+    
+//MARK: Table ViewDelegate
+    // при выборе окна-изображения вызывается Alert с пунктами Camera, Photo, Cancel
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
             let cameraIicon = #imageLiteral(resourceName: "camera") //иконка алерта для меню пункта камера
@@ -42,16 +59,47 @@ class NewPlaceViewController: UITableViewController {
             present(actionSheet, animated: true)
             
         }else{
-            view.endEditing(true)
+            view.endEditing(true) //скрытие клавиатуры
         }
     }
   
+    //метод сохранения введеных данныхиз полей в модель PlaceModel
+    func saveNewPlace(){
+        var image: UIImage?
+        if imageIsChanged{
+           image = placeImage.image
+        }else{
+            image = #imageLiteral(resourceName: "imagePlaceholder")
+        }
+        
+        //присваиваем экземпляру NewPlace объект структуры Place
+        newPlace = Place(name: placeName.text!,
+                         location: placeLocation.text,
+                         type: placeType.text,
+                         image: image,
+                         restaurantImage: nil)
+    }
+    @IBAction func actionCancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true) //метод который закрывает NewPlaceViewController  и выгружает его из памяти
+    }
+    
 }
+
 //MARK: TextFieldDelegate
 extension NewPlaceViewController : UITextFieldDelegate {
+    // скрытие клавиатуры по нажатию на кнопку Done
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    //ьетод включает кнопку SAVE если поле textFieldName заполненно
+    @objc private func textFieldChanged(){
+        if placeName.text?.isEmpty == false{
+            saveButton.isEnabled = true
+        }else{
+            saveButton.isEnabled = false
+        }
     }
 }
   
@@ -69,9 +117,11 @@ extension NewPlaceViewController : UIImagePickerControllerDelegate, UINavigation
        }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageOfPlace.image = info[.editedImage] as? UIImage
-        imageOfPlace.contentMode = .scaleAspectFit
-        imageOfPlace.clipsToBounds = true
+        placeImage.image = info[.editedImage] as? UIImage
+        placeImage.contentMode = .scaleAspectFit
+        placeImage.clipsToBounds = true
+        
+        imageIsChanged = true //картинка не меняется
         dismiss(animated: true)
     }
 }
