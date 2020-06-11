@@ -8,11 +8,13 @@
 
 import UIKit
 
+
 class NewPlaceViewController: UITableViewController {
     var newPlace: Place? // экземпляр структуры Place
     var imageIsChanged = false // дополнительное свойство на случай если пользователь не добавит свое изображение
 
    
+    
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeName: UITextField!
