@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		7A7AD38E24884E21006AE3FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7AD38D24884E21006AE3FE /* MainViewController.swift */; };
 		7A9B7146248E761600CF5025 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */; };
 		7AC02A8D248AEEFA008E905A /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC02A8C248AEEFA008E905A /* PlaceModel.swift */; };
+		7AEAA14324923C0A00A20FC7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAA14224923C0A00A20FC7 /* StorageManager.swift */; };
 		CFA0926A6CAABEF237E18D5F /* Pods_UITableApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BE0EFA54D56F8371842CAC /* Pods_UITableApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		7A7AD38D24884E21006AE3FE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlaceViewController.swift; sourceTree = "<group>"; };
 		7AC02A8C248AEEFA008E905A /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
+		7AEAA14224923C0A00A20FC7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		82BE0EFA54D56F8371842CAC /* Pods_UITableApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITableApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4A5F53EA0C1D36BFE1AD0D8 /* Pods-UITableApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITableApp.release.xcconfig"; path = "Target Support Files/Pods-UITableApp/Pods-UITableApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +97,7 @@
 			children = (
 				7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */,
 				7AC02A8C248AEEFA008E905A /* PlaceModel.swift */,
+				7AEAA14224923C0A00A20FC7 /* StorageManager.swift */,
 			);
 			path = NewPlaceController;
 			sourceTree = "<group>";
@@ -154,7 +157,7 @@
 				};
 			};
 			buildConfigurationList = 7A2817DA2487BEEB001EC07C /* Build configuration list for PBXProject "UITableApp" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -234,6 +237,7 @@
 				7A7AD38E24884E21006AE3FE /* MainViewController.swift in Sources */,
 				7A9B7146248E761600CF5025 /* NewPlaceViewController.swift in Sources */,
 				7A2817E32487BEEB001EC07C /* AppDelegate.swift in Sources */,
+				7AEAA14324923C0A00A20FC7 /* StorageManager.swift in Sources */,
 				7AC02A8D248AEEFA008E905A /* PlaceModel.swift in Sources */,
 				7A101BD3248A66130009191E /* CustomTableViewCell.swift in Sources */,
 				7A2817E52487BEEB001EC07C /* SceneDelegate.swift in Sources */,

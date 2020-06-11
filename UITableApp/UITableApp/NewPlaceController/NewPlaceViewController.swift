@@ -10,7 +10,9 @@ import UIKit
 
 
 class NewPlaceViewController: UITableViewController {
-    var newPlace: Place? // экземпляр структуры Place
+   
+   // var newPlace: Place? // экземпляр структуры Place
+    var newPlace = Place() // присваиваем объект модели Place
     var imageIsChanged = false // дополнительное свойство на случай если пользователь не добавит свое изображение
 
    
@@ -25,6 +27,13 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //вызываем метод savePlaces  у нашего экземпляра модели
+        //запись в базу происходит в фоновом режиме с помощью DispatchQueue.main.async
+        DispatchQueue.main.async {
+            self.newPlace.savePlaces()
+        }
+        
+        
         tableView.tableFooterView = UIView()
         saveButton.isEnabled = false
         
@@ -75,11 +84,11 @@ class NewPlaceViewController: UITableViewController {
         }
         
         //присваиваем экземпляру NewPlace объект структуры Place
-        newPlace = Place(name: placeName.text!,
+     /*   newPlace = Place(name: placeName.text!,
                          location: placeLocation.text,
                          type: placeType.text,
                          image: image,
-                         restaurantImage: nil)
+                         restaurantImage: nil)*/
     }
     @IBAction func actionCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true) //метод который закрывает NewPlaceViewController  и выгружает его из памяти
