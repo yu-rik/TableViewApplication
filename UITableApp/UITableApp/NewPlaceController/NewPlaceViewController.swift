@@ -11,8 +11,6 @@ import UIKit
 
 class NewPlaceViewController: UITableViewController {
    
-   // var newPlace: Place? // экземпляр структуры Place
-    var newPlace = Place() // присваиваем объект модели Place
     var imageIsChanged = false // дополнительное свойство на случай если пользователь не добавит свое изображение
 
    
@@ -27,14 +25,8 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //вызываем метод savePlaces  у нашего экземпляра модели
-        //запись в базу происходит в фоновом режиме с помощью DispatchQueue.main.async
-        DispatchQueue.main.async {
-            self.newPlace.savePlaces()
-        }
-        
-        
-        tableView.tableFooterView = UIView()
+             
+        tableView.tableFooterView = UIView() //скрытие лишних разлинеек отображаемых на виде
         saveButton.isEnabled = false
         
         //отслеживвание внесения данных в поле textFieldName и включение/выключение кнопки Save
@@ -76,19 +68,27 @@ class NewPlaceViewController: UITableViewController {
   
     //метод сохранения введеных данныхиз полей в модель PlaceModel
     func saveNewPlace(){
+      //создаем экземпляр модели для присваивания значений свойствам модели Place 
+      //  let newPlace = Place()
+        
         var image: UIImage?
         if imageIsChanged{
            image = placeImage.image
         }else{
             image = #imageLiteral(resourceName: "imagePlaceholder")
         }
+        //присваиваем значения свойствам модели Place
+        let imageConvert = image?.pngData() //конвертируем изображение из UIImage в тип DATA
+//        newPlace.name = placeName.text!
+//        newPlace.location = placeLocation.text
+//        newPlace.type = placeType.text
+//        newPlace.imageData = imageConvert
+        //инициализация с помощью init() класса
+        let newPlace = Place(name: placeName.text!, location: placeLocation.text, type: placeType.text, imageData: imageConvert)
         
-        //присваиваем экземпляру NewPlace объект структуры Place
-     /*   newPlace = Place(name: placeName.text!,
-                         location: placeLocation.text,
-                         type: placeType.text,
-                         image: image,
-                         restaurantImage: nil)*/
+        //сохранение объекта в базе данных
+        StorageManager.saveObject(newPlace)
+      
     }
     @IBAction func actionCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true) //метод который закрывает NewPlaceViewController  и выгружает его из памяти

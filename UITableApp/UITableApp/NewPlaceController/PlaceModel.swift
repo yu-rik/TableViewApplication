@@ -14,37 +14,13 @@ class Place : Object {
     @objc dynamic var location: String?
     @objc dynamic var type: String?
     @objc dynamic var imageData: Data?
-    //var restaurantImage: String?
-    
-      let restaurantsName = ["Puzata hata","Napaleon hill","Big mac","Stolovaya #5","Uzbek","Proreznaya","Ludmila","Oaza","Partenit","Semeiz","Vepr", "Velyka bochka","Praga","London","Toronto"]
-    
-    func savePlaces() {
-        
-        for place in restaurantsName {
-          let image = UIImage(named: place)
-            //перевод изображения UIImage  в тип Data
-            guard let imageDat = image?.pngData() else{return}
-            
-            
-            let newPlace = Place() // экземпляр модели
-            //присваиваем свойствам экземпляра значения:
-            newPlace.name = place
-            newPlace.location = "Kyiv"
-            newPlace.type = "Restaurant"
-            newPlace.imageData = imageDat
-            
-            StorageManager.saveObject(newPlace) //при каждой итеррации объект будет сохраняться в базу
-            
-        }
-       
+    convenience init(name: String, location: String?, type: String?, imageData: Data?){
+        //инициализатор(convenience initv) должен вызывать инициализатор самого класса с пустыми параметрами
+        self.init() //для того чтобы можно инициализировать все свойства значениями по умолчанию
+        self.name = name
+        self.location = location
+        self.type = type
+        self.imageData = imageData
     }
 }
 
-/*    static func getPlaces() ->[Place]{
-    var places = [Place]()
-    for place in restaurantsName {
-        places.append(Place(name: place, location: "Киев", type: "Ресторан", image: nil, restaurantImage: place))
-    }
-    return places
-}
-*/
