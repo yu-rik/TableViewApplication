@@ -47,12 +47,24 @@ class MainViewController: UITableViewController {
     }
      
     
-   /* // MARK: - TableViewDelegate
+    // MARK: - TableViewDelegate
      //метод возвращает высоту строки, если выcоту строки указывать в storyboard, то этот метод не нужен
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
+    //override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+     //   return 85
+   // }
+    
+    //метод протокола TableViewDelegate, который позволяет вызывать свайпом справа -налево другие методы
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            StorageManager.deleteObject(places[indexPath.row])
+            tableView.deleteRows(at: [indexPath], with: .fade )
+        }
     }
-    */
+    
+
+    
+    
+    
     
    /*
     // MARK: - Navigation
