@@ -66,21 +66,29 @@ class MainViewController: UITableViewController {
     
     
     
-   /*
+   
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showDetail"{
+            //определяем индекс выбранной ячейки
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            //извлекаем объект из массива places по полученному индексу ячейки
+            let place = places[indexPath.row]
+            //экземпляр NewPlaceViewControllera с помощью которого будем передавать данные на NewPlaceViewController
+            let newPlaceVC = segue.destination as! NewPlaceViewController
+            // передаем place на newPlaceVC
+            newPlaceVC.currentPlace = place
+        }
     }
-    */
+    
     
     //связь кнопки Save с unwindSegue
  @IBAction func unwindSegue(_ segue: UIStoryboardSegue){
     //создаем экземпляр класса NewPlaceViewController с извлечением опционала через guard
     guard let newPlaceVC = segue.source as? NewPlaceViewController else {return} //с помощью .source получаем данные и приводим их к типу NewPlaceViewController
-    newPlaceVC.saveNewPlace() //вызов метода-добавления значений в модель из класса NewPlaceViewController
+    newPlaceVC.savePlace() //вызов метода-добавления значений в модель из класса NewPlaceViewController
     tableView.reloadData() // обновление интерфейса
     
     }

@@ -13,7 +13,8 @@ class NewPlaceViewController: UITableViewController {
    
     var imageIsChanged = false // дополнительное свойство на случай если пользователь не добавит свое изображение
 
-   
+   // объект в который будем передавать выбранную запись с MainViewController
+    var currentPlace: Place?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var placeImage: UIImageView!
@@ -31,7 +32,7 @@ class NewPlaceViewController: UITableViewController {
         
         //отслеживвание внесения данных в поле textFieldName и включение/выключение кнопки Save
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // при редактировании поля textFieldName вызывается метод textFieldChanged
-        
+        setUpEdit()//вызов метода редактирования записи
     }
     
 //MARK: Table ViewDelegate
@@ -67,7 +68,7 @@ class NewPlaceViewController: UITableViewController {
     }
   
     //метод сохранения введеных данныхиз полей в модель PlaceModel
-    func saveNewPlace(){
+    func savePlace(){
       //создаем экземпляр модели для присваивания значений свойствам модели Place 
       //  let newPlace = Place()
         
@@ -85,11 +86,55 @@ class NewPlaceViewController: UITableViewController {
 //        newPlace.imageData = imageConvert
         //инициализация с помощью init() класса
         let newPlace = Place(name: placeName.text!, location: placeLocation.text, type: placeType.text, imageData: imageConvert)
+        if currentPlace != nil{
+            try! realm.write {
+                currentPlace?.name = newPlace.name
+                currentPlace?.location = newPlace.location
+                currentPlace?.type = newPlace.type
+                currentPlace?.imageData = newPlace.imageData
+            }
+        } else {
+            //сохранение объекта в базе данных
+            StorageManager.saveObject(newPlace)
+        }
         
-        //сохранение объекта в базе данных
-        StorageManager.saveObject(newPlace)
+        
+        
+        
       
     }
+    //метод для работы над экраном редактирования записи
+    private func setUpEdit(){
+        if currentPlace != nil{
+            setupNavigationBar()
+            imageIsChanged = true
+            
+            guard let data = currentPlace?.imageData, let image = UIImage(data: data) else {return}
+            placeImage.image = image
+            placeImage.contentMode = .scaleAspectFill // масштабирование изображения по содержимому imageView
+            placeName.text = currentPlace?.name
+            placeLocation.text = currentPlace?.location
+            placeType.text = currentPlace?.type
+            
+        }
+    }
+    
+    //работа над navigationBar
+    private func setupNavigationBar() {
+        //убираем в кнопке возврата надпись
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+        
+        
+        //убираем кнопку Cancel
+        navigationItem.leftBarButtonItem = nil
+        //передаем текущее название ячейки в заголовок navigationBar
+        title = currentPlace?.name
+        //доступность кнопки Save
+        saveButton.isEnabled = true
+    }
+    
     @IBAction func actionCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true) //метод который закрывает NewPlaceViewController  и выгружает его из памяти
     }
