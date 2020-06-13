@@ -27,7 +27,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="OAM-xF-N4R">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="250.00000000000006"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
@@ -257,6 +257,9 @@
                                     <segment title="Date"/>
                                     <segment title="Name"/>
                                 </segments>
+                                <connections>
+                                    <action selector="sortSelection:" destination="A84-V4-Ut5" eventType="valueChanged" id="ZlL-LD-2P6"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -269,7 +272,11 @@
                         <viewLayoutGuide key="safeArea" id="hPa-9A-KWa"/>
                     </view>
                     <navigationItem key="navigationItem" title="My places" largeTitleDisplayMode="never" id="toS-2g-YB6">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="AZ" id="8Gc-pm-PGX"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="AZ" id="8Gc-pm-PGX">
+                            <connections>
+                                <action selector="reverseSorting:" destination="A84-V4-Ut5" id="n1w-t8-6Gq"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="z4n-Rh-IdO">
                             <connections>
                                 <segue destination="l8x-h6-fgr" kind="presentation" id="MUk-Yk-8Kb"/>
@@ -277,6 +284,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="reverseSortingButton" destination="8Gc-pm-PGX" id="Uty-HK-5cj"/>
+                        <outlet property="segmentedControl" destination="PwB-r8-ZnY" id="ebA-w7-n8j"/>
                         <outlet property="tableView" destination="8KD-Qz-hR8" id="z3H-PZ-8On"/>
                     </connections>
                 </viewController>

@@ -10,10 +10,18 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var reverseSortingButton: UIBarButtonItem!
+    
+    
+    
+    
     
 //создаем объект класса Results(тип библиотеки Realm, аналог массива) для запроса к базе и отображения ее данных в интерфейсе
  var places : Results<Place>!
+    //создаем свойство для создания сортировки по возрастанию
+    var ascendingSorting = true //по умолчанию сортировка по возрастанию
     
    
     
@@ -95,5 +103,31 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     tableView.reloadData() // обновление интерфейса
     
     }
-
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        //сортировка в зависимости от нажатой кнопки
+//        if sender.selectedSegmentIndex == 0 {
+//            places = places.sorted(byKeyPath: "date")
+//        }else {
+//            places = places.sorted(byKeyPath: "name")
+//        }
+//        tableView.reloadData()
+       sorting()
+    }
+    @IBAction func reverseSorting(_ sender: UIBarButtonItem) {
+        ascendingSorting.toggle() //меняем значение ascendingSorting на противоположное
+        if ascendingSorting {
+            reverseSortingButton.image = #imageLiteral(resourceName: "AZ") // меняем значение изображения для кнопки (аутлет кнопки бар-Айтем)
+        } else {
+            reverseSortingButton.image = #imageLiteral(resourceName: "ZA")
+        }
+        sorting()
+    }
+    private func sorting() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
+        }else {
+            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
+        }
+        tableView.reloadData()
+    }
 }
