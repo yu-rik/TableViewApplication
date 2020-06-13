@@ -9,10 +9,13 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UITableViewController {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+     @IBOutlet weak var tableView: UITableView!
+    
 //создаем объект класса Results(тип библиотеки Realm, аналог массива) для запроса к базе и отображения ее данных в интерфейсе
  var places : Results<Place>!
     
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +28,11 @@ class MainViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return places.isEmpty ? 0 : places.count //если база пуста - возвращаем ноль
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Jacheyka", for: indexPath) as! CustomTableViewCell
        //---------------------- заполнение полей ячейки ----------------start
         let place = places[indexPath.row]
@@ -54,7 +57,7 @@ class MainViewController: UITableViewController {
    // }
     
     //метод протокола TableViewDelegate, который позволяет вызывать свайпом справа -налево другие методы
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             StorageManager.deleteObject(places[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .fade )
