@@ -175,7 +175,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sQ6-gF-2Q9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="yfI-rV-sHf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1306" y="240"/>
+            <point key="canvasLocation" x="1370" y="237"/>
         </scene>
         <!--My places-->
         <scene sceneID="dHz-UT-lIq">
@@ -185,9 +185,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8KD-Qz-hR8">
-                                <rect key="frame" x="0.0" y="126" width="414" height="770"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8KD-Qz-hR8">
+                                <rect key="frame" x="0.0" y="120" width="414" height="776"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Jacheyka" id="cvq-bs-TMO" customClass="CustomTableViewCell" customModule="UITableApp" customModuleProvider="target">
@@ -252,7 +251,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PwB-r8-ZnY">
-                                <rect key="frame" x="0.0" y="88" width="414" height="38"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="32"/>
                                 <segments>
                                     <segment title="Date"/>
                                     <segment title="Name"/>
@@ -264,9 +263,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="8KD-Qz-hR8" secondAttribute="bottom" id="DmL-Il-hJi"/>
                             <constraint firstItem="PwB-r8-ZnY" firstAttribute="trailing" secondItem="hPa-9A-KWa" secondAttribute="trailing" id="Isu-NK-nVg"/>
                             <constraint firstItem="PwB-r8-ZnY" firstAttribute="top" secondItem="hPa-9A-KWa" secondAttribute="top" id="OXc-T0-N31"/>
+                            <constraint firstItem="8KD-Qz-hR8" firstAttribute="leading" secondItem="hPa-9A-KWa" secondAttribute="leading" id="OhH-hq-2Bq"/>
                             <constraint firstItem="PwB-r8-ZnY" firstAttribute="leading" secondItem="hPa-9A-KWa" secondAttribute="leading" id="gbP-uY-5TY"/>
+                            <constraint firstItem="8KD-Qz-hR8" firstAttribute="trailing" secondItem="hPa-9A-KWa" secondAttribute="trailing" id="rkQ-Y0-KEy"/>
+                            <constraint firstItem="8KD-Qz-hR8" firstAttribute="top" secondItem="PwB-r8-ZnY" secondAttribute="bottom" constant="1" id="vA6-hN-SVq"/>
                             <constraint firstItem="8KD-Qz-hR8" firstAttribute="top" secondItem="PwB-r8-ZnY" secondAttribute="bottom" constant="1" id="yse-ZQ-pOX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hPa-9A-KWa"/>

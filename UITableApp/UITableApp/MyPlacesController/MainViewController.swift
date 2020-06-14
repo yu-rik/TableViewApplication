@@ -10,20 +10,33 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var reverseSortingButton: UIBarButtonItem!
     
+    //создаем экземпляр класса UISearchController для работы с поиском и отображением информации на том же View
+    private let searchController = UISearchController(searchResultsController: nil)
     
+   //создаем объект класса Results(тип библиотеки Realm, аналог массива) для запроса к базе и отображения ее данных в интерфейсе
+   private var places : Results<Place>!
     
+    //создаем массив куда будем присваивать отфильтрованные записи для отображения поискового запроса
+    private var filteredPlaces: Results<Place>!
     
+    //свойство для отображения true или false в зависимости является ли строка пустой
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else {return false}
+        return text.isEmpty
+    }
     
-//создаем объект класса Results(тип библиотеки Realm, аналог массива) для запроса к базе и отображения ее данных в интерфейсе
- var places : Results<Place>!
+    //для отслеживания активации поискового запроса - возвращает true  если поисковая строка активирована и не пустая
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+    
     //создаем свойство для создания сортировки по возрастанию
     var ascendingSorting = true //по умолчанию сортировка по возрастанию
     
-   
+   @IBOutlet weak var tableView: UITableView!
+   @IBOutlet weak var segmentedControl: UISegmentedControl!
+   @IBOutlet weak var reverseSortingButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,19 +44,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //делаем запрос объектов из realm инициализируя свойства places
         places = realm.objects(Place.self) // под Place имеется ввиду тип данных
         
+        //настройка параметров объекта UISearchControllera
+        searchController.searchResultsUpdater = self //получатель информации об изменении текста в поисковой строке будет данный класс MainView
+        searchController.obscuresBackgroundDuringPresentation = false //возможность просматривать и редактировать выбранное (true -не дает такой возможности)
+        searchController.searchBar.placeholder = "Search" // название поисковой строки
+        navigationItem.searchController = searchController //строка поиска интегрирована в navigationBar
+        definesPresentationContext = true // позволяет отпустить строку поиска при переходе на другой экран
+        
       
     }
 
     // MARK: - Table view data source
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {  //если поисковая строка не пустая
+            return filteredPlaces.count  //возвращает количество элементов отфильтрованного массива
+        }
         return places.isEmpty ? 0 : places.count //если база пуста - возвращаем ноль
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Jacheyka", for: indexPath) as! CustomTableViewCell
        //---------------------- заполнение полей ячейки ----------------start
-        let place = places[indexPath.row]
+        
+        //создание экземпляра модели для присваивания ему значения из массива filteredPlaces или массива places
+        var place = Place()
+        if isFiltering {
+            place = filteredPlaces[indexPath.row]
+        }else {
+            place = places[indexPath.row]
+        }
                 
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
         cell.nameLabel.text = place.name
@@ -85,10 +115,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if segue.identifier == "showDetail"{
             //определяем индекс выбранной ячейки
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
-            //извлекаем объект из массива places по полученному индексу ячейки
-            let place = places[indexPath.row]
+           
+            //создание экземпляра модели для присваивания ему значения из массива filteredPlaces или массива places
+            let place: Place
+                   if isFiltering {
+                       place = filteredPlaces[indexPath.row]
+                   }else {
+                       //извлекаем объект из массива places по полученному индексу ячейки
+                       place = places[indexPath.row]
+                   }
+           
             //экземпляр NewPlaceViewControllera с помощью которого будем передавать данные на NewPlaceViewController
             let newPlaceVC = segue.destination as! NewPlaceViewController
+           
             // передаем place на newPlaceVC
             newPlaceVC.currentPlace = place
         }
@@ -130,4 +169,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         tableView.reloadData()
     }
+}
+extension MainViewController : UISearchResultsUpdating{
+   // метод вызывается при тапе по поисковой строке
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!) //в параметрах значение из поисковой строки
+    }
+    //фильтрация контента в соответствии с поисковым запросом
+    private func filterContentForSearchText(_ searchText: String) {
+        //заполнение массива filterdPlaces отфильтрованными данными основного массива базыданных
+        filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@", searchText, searchText)
+        tableView.reloadData()
+    }
+    
 }
