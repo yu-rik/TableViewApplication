@@ -60,6 +60,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if isFiltering {  //если поисковая строка не пустая
             return filteredPlaces.count  //возвращает количество элементов отфильтрованного массива
         }
+      // return places.count верно!!!
         return places.isEmpty ? 0 : places.count //если база пуста - возвращаем ноль
     }
     
@@ -68,6 +69,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
        //---------------------- заполнение полей ячейки ----------------start
         
         //создание экземпляра модели для присваивания ему значения из массива filteredPlaces или массива places
+      //с помощью тернарного оператора
+        // let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
         var place = Place()
         if isFiltering {
             place = filteredPlaces[indexPath.row]
@@ -79,10 +82,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.nameLabel.text = place.name
         cell.locationLabel.text = place.location
         cell.typeLabel.text = place.type
+        
+        //отображение звезд рэйтинга на главном экране
+        cell.cosmosView.rating = place.raitinG
+        
         //----------------------------------- end
-         
-        cell.imageOfPlace.layer.cornerRadius = (cell.imageOfPlace.frame.size.height)/2 //cell.frame.size.height -значение высоты ячейки родительского класса UITableViewCell
-        cell.imageOfPlace.clipsToBounds = true
+            
 
         return cell
     }
@@ -93,6 +98,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
      //   return 85
    // }
+    //метод который убирает выделение ячейки при возврате с View на главный View
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
     //метод протокола TableViewDelegate, который позволяет вызывать свайпом справа -налево другие методы
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -117,6 +126,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
            
             //создание экземпляра модели для присваивания ему значения из массива filteredPlaces или массива places
+          // через тернарный оператор let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+            
+            
             let place: Place
                    if isFiltering {
                        place = filteredPlaces[indexPath.row]

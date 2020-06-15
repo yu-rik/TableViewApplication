@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cosmos
 
 
 class NewPlaceViewController: UITableViewController {
@@ -16,29 +17,41 @@ class NewPlaceViewController: UITableViewController {
    // объект в который будем передавать выбранную запись с MainViewController
     var currentPlace: Place?
     
+    //вняшняя переменная для приема данных(значение рейтинга), в дальнейшем передача данных в базу данных
+    var currentRaiting = 0.0
+    
+    
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var placeImage: UIImageView!
     @IBOutlet weak var placeName: UITextField!
     @IBOutlet weak var placeLocation: UITextField!
     @IBOutlet weak var placeType: UITextField!
+    @IBOutlet weak var cosmosView: CosmosView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-             
-        tableView.tableFooterView = UIView() //скрытие лишних разлинеек отображаемых на виде
+        // tableView.tableFooterView = UIView() --скрытие лишних разлинеек отображаемых на виде
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
+        
         saveButton.isEnabled = false
         
         //отслеживвание внесения данных в поле textFieldName и включение/выключение кнопки Save
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // при редактировании поля textFieldName вызывается метод textFieldChanged
         setUpEdit()//вызов метода редактирования записи
+        
+        //работа с космос-звездами
+        cosmosView.settings.fillMode = .full
+        cosmosView.didTouchCosmos = { raiting in
+            self.currentRaiting = raiting} //присваивание текущего рейтинга
     }
     
 //MARK: Table ViewDelegate
     // при выборе окна-изображения вызывается Alert с пунктами Camera, Photo, Cancel
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0{
+       override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if indexPath.row == 0{
             let cameraIicon = #imageLiteral(resourceName: "camera") //иконка алерта для меню пункта камера
             let photoIcon = #imageLiteral(resourceName: "photo")  //иконка алерта для меню пункта фото
             
@@ -85,13 +98,18 @@ class NewPlaceViewController: UITableViewController {
 //        newPlace.type = placeType.text
 //        newPlace.imageData = imageConvert
         //инициализация с помощью init() класса
-        let newPlace = Place(name: placeName.text!, location: placeLocation.text, type: placeType.text, imageData: imageConvert)
+        let newPlace = Place(name: placeName.text!,
+                             location: placeLocation.text,
+                             type: placeType.text,
+                             imageData: imageConvert,
+                             raiting: currentRaiting)
         if currentPlace != nil{
             try! realm.write {
                 currentPlace?.name = newPlace.name
                 currentPlace?.location = newPlace.location
                 currentPlace?.type = newPlace.type
                 currentPlace?.imageData = newPlace.imageData
+                currentPlace?.raitinG = newPlace.raitinG
             }
         } else {
             //сохранение объекта в базе данных
@@ -115,6 +133,7 @@ class NewPlaceViewController: UITableViewController {
             placeName.text = currentPlace?.name
             placeLocation.text = currentPlace?.location
             placeType.text = currentPlace?.type
+            cosmosView.rating = currentPlace!.raitinG
             
         }
     }

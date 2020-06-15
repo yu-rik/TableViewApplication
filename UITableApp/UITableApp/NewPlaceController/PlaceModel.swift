@@ -15,14 +15,17 @@ class Place : Object {
     @objc dynamic var type: String?
     @objc dynamic var imageData: Data?
     @objc dynamic var date = Date()
+    @objc dynamic var raitinG = 0.0
     
-    convenience init(name: String, location: String?, type: String?, imageData: Data?){
+    
+    convenience init(name: String, location: String?, type: String?, imageData: Data?, raiting : Double){
         //инициализатор(convenience initv) должен вызывать инициализатор самого класса с пустыми параметрами
         self.init() //для того чтобы можно инициализировать все свойства значениями по умолчанию
         self.name = name
         self.location = location
         self.type = type
         self.imageData = imageData
+        self.raitinG = raiting
     }
 }
 
