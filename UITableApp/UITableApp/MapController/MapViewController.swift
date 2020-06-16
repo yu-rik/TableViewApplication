@@ -13,6 +13,9 @@ class MapViewController: UIViewController {
     
     var place: Place!
     
+    //уникальный идентификатор
+    let annotationIdentifier = "annotationIdentifier"
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBAction func Close() {
         dismiss(animated: true) // метод закрывает ViewController  и выгружает его из памяти
@@ -23,6 +26,11 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //подписываем делегата ответственного за выполнения методов протокола MKMapViewDelegate
+        //или в storyboard перетянуть лучиком от mapView к mapViewController  и выбрать delegate
+        mapView.delegate = self
+        
         setUpMark() //вызов метода при переходе на viewController
 
         
@@ -73,4 +81,40 @@ class MapViewController: UIViewController {
     }
 
 
+}
+extension MapViewController : MKMapViewDelegate{
+    //
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else {return nil} //если положением на карте является текущее положение то выходим из метода вернув nil
+        
+        // представляет View c аннотацией на карте
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView // приводим к MKPinAnnotationView чтоб отобразился маркер в виде булавки
+         
+        // если на карте нету ниодного представления с аннотацией которое можно переиспользовать, то присваиваем annotationView новый объект
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+             //отображение аннотации в виде баннера
+            annotationView?.canShowCallout = true
+        }
+        
+        
+        //размещаем изображение на баннере
+        
+        if let imageData = place.imageData { //проверка на опционал
+            
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50)) //инициализируем изображение - задаем координаты и размеры картинки
+            imageView.layer.cornerRadius = 10 //скругляем радиусы
+            imageView.clipsToBounds = true // обрезаем изображение по границам imageView
+            imageView.image = UIImage(data: imageData) // помещаем само изображение в imageView
+            
+            //размещение imageView на баннере с правой стороны
+            annotationView?.rightCalloutAccessoryView = imageView
+        }
+        
+        
+        
+        
+        
+        return annotationView
+    }
 }
