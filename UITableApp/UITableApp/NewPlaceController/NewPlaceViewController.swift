@@ -84,14 +84,19 @@ class NewPlaceViewController: UITableViewController {
     //MARK: Navigation
     //переход на MapViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier != "showMap" {
-            return
-        }else {
+        if segue.identifier != "showMap" {return}
+        else {
             let mapVC = segue.destination as! MapViewController //экземпляр класса MapViewController
              
             //передача текущего заведения на mapVC
-            mapVC.place = currentPlace
-        }
+          //  mapVC.place = currentPlace
+            mapVC.place.imageData = placeImage.image?.pngData()
+            mapVC.place.name = placeName.text!
+            mapVC.place.location = placeLocation.text
+            mapVC.place.type = placeType.text
+            mapVC.place.raitinG = cosmosView.rating
+            
+         }
     }
     
     
@@ -99,7 +104,7 @@ class NewPlaceViewController: UITableViewController {
     func savePlace(){
       //создаем экземпляр модели для присваивания значений свойствам модели Place 
       //  let newPlace = Place()
-        
+        // с помощью тернарного оператора let image = imageIsChanged ? placeImage.image : image = literal
         var image: UIImage?
         if imageIsChanged{
            image = placeImage.image
