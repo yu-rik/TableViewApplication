@@ -80,6 +80,21 @@ class NewPlaceViewController: UITableViewController {
         }
     }
   
+    
+    //MARK: Navigation
+    //переход на MapViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier != "showMap" {
+            return
+        }else {
+            let mapVC = segue.destination as! MapViewController //экземпляр класса MapViewController
+             
+            //передача текущего заведения на mapVC
+            mapVC.place = currentPlace
+        }
+    }
+    
+    
     //метод сохранения введеных данныхиз полей в модель PlaceModel
     func savePlace(){
       //создаем экземпляр модели для присваивания значений свойствам модели Place 
