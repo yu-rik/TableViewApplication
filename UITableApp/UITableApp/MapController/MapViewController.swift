@@ -15,15 +15,22 @@ class MapViewController: UIViewController {
     //для управления действиями с местоположением пользователя создаем экземпляр класса CLLocationManager()
     let locationManager = CLLocationManager()
     
+    let regionInMeters = 1_000_000.00
+    
     
     var place = Place()
     
     //уникальный идентификатор
     let annotationIdentifier = "annotationIdentifier"
     
+    var incomeSegueIdentifier = "" //идентификатор segue - для вызова того или другого segue
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBAction func Close() {
         dismiss(animated: true) // метод закрывает ViewController  и выгружает его из памяти
+    }
+    @IBAction func centerVviewInUserLocation() {
+           showUserLocation() // позиционирование карты по местоположению пользователя
     }
     
     
@@ -35,12 +42,20 @@ class MapViewController: UIViewController {
         //подписываем делегата ответственного за выполнения методов протокола MKMapViewDelegate
         //или в storyboard перетянуть лучиком от mapView к mapViewController  и выбрать delegate
         mapView.delegate = self
+       
+        setupMapView()
         
-        setUpMark() //вызов метода при переходе на viewController
         checkLocationServices()
 
         
     }
+    private func setupMapView() {
+        if incomeSegueIdentifier == "showMap" {
+            setUpMark() //вызов метода при переходе на viewController и позиционирование карты по местоположению заведения
+        }
+    }
+    
+    
     
     //метод который указывает положение на карте
     private func setUpMark() {
@@ -93,7 +108,10 @@ class MapViewController: UIViewController {
             setUpLocationManager()
             checkLocationAutorization()
         }else {
-            //Alert controller
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                self.showAlert(title: "Location Server is Disabled",
+                               message: "To enable it go: Settings -> Privacy -> Locationvservices and turn ON")
+            }
         }
     }
     
@@ -110,6 +128,7 @@ class MapViewController: UIViewController {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse: //приложению разрешенно использовать геолокацию
             mapView.showsUserLocation = true
+            if incomeSegueIdentifier == "getAdress" {showUserLocation()}
             break
         case .denied: //отказано в доступе
             //показать AlertController
@@ -126,7 +145,29 @@ class MapViewController: UIViewController {
             print("all good")
         }
     }
+    
+    private func showUserLocation() {
+        //определяем координаты положения юзера
+           if let location = locationManager.location?.coordinate {
+              //определяем регион
+               let region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+               
+               //отображаем регион на экране
+               mapView.setRegion(region, animated: true)
+           }
+    }
+
+    private func showAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
 }
+
+
 
 extension MapViewController : MKMapViewDelegate{
     //

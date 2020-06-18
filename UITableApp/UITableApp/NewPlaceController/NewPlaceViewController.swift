@@ -84,10 +84,17 @@ class NewPlaceViewController: UITableViewController {
     //MARK: Navigation
     //переход на MapViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier != "showMap" {return}
-        else {
-            let mapVC = segue.destination as! MapViewController //экземпляр класса MapViewController
-             
+       //добираемся до segue и если получается создаем экземпляр класса MapViewController
+        guard let identifier = segue.identifier,
+         let mapVC = segue.destination as? MapViewController
+            else {return}
+        
+       // if segue.identifier != "showMap" {return}
+       // else {
+          //  let mapVC = segue.destination as! MapViewController //экземпляр класса MapViewController
+       mapVC.incomeSegueIdentifier = identifier
+        if identifier == "showMap"{
+                    
             //передача текущего заведения на mapVC
           //  mapVC.place = currentPlace
             mapVC.place.imageData = placeImage.image?.pngData()

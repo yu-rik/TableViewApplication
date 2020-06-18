@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		7A101BD3248A66130009191E /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A101BD2248A66130009191E /* CustomTableViewCell.swift */; };
+		7A175BFD249A9C9800F68225 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A175BFC249A9C9700F68225 /* Assets.xcassets */; };
 		7A2817E32487BEEB001EC07C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2817E22487BEEB001EC07C /* AppDelegate.swift */; };
 		7A2817E52487BEEB001EC07C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2817E42487BEEB001EC07C /* SceneDelegate.swift */; };
 		7A2817EA2487BEEB001EC07C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A2817E82487BEEB001EC07C /* Main.storyboard */; };
-		7A2817EC2487BEEC001EC07C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A2817EB2487BEEC001EC07C /* Assets.xcassets */; };
 		7A2817EF2487BEEC001EC07C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A2817ED2487BEEC001EC07C /* LaunchScreen.storyboard */; };
 		7A7AD38E24884E21006AE3FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7AD38D24884E21006AE3FE /* MainViewController.swift */; };
 		7A9B7146248E761600CF5025 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9B7145248E761600CF5025 /* NewPlaceViewController.swift */; };
@@ -24,11 +24,11 @@
 /* Begin PBXFileReference section */
 		1DBA1219A0B53E48BA2E6B79 /* Pods-UITableApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITableApp.debug.xcconfig"; path = "Target Support Files/Pods-UITableApp/Pods-UITableApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7A101BD2248A66130009191E /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		7A175BFC249A9C9700F68225 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = UITableApp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		7A2817DF2487BEEB001EC07C /* UITableApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UITableApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A2817E22487BEEB001EC07C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A2817E42487BEEB001EC07C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7A2817E92487BEEB001EC07C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7A2817EB2487BEEC001EC07C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A2817EE2487BEEC001EC07C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A2817F02487BEEC001EC07C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A7AD38D24884E21006AE3FE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -77,9 +77,9 @@
 				7ACB87382490C5E300337337 /* MyPlacesController */,
 				7ACB87392490C64800337337 /* NewPlaceController */,
 				7A2817E22487BEEB001EC07C /* AppDelegate.swift */,
+				7A175BFC249A9C9700F68225 /* Assets.xcassets */,
 				7A2817E42487BEEB001EC07C /* SceneDelegate.swift */,
 				7A2817E82487BEEB001EC07C /* Main.storyboard */,
-				7A2817EB2487BEEC001EC07C /* Assets.xcassets */,
 				7A2817ED2487BEEC001EC07C /* LaunchScreen.storyboard */,
 				7A2817F02487BEEC001EC07C /* Info.plist */,
 			);
@@ -191,7 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A2817EF2487BEEC001EC07C /* LaunchScreen.storyboard in Resources */,
-				7A2817EC2487BEEC001EC07C /* Assets.xcassets in Resources */,
+				7A175BFD249A9C9800F68225 /* Assets.xcassets in Resources */,
 				7A2817EA2487BEEB001EC07C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
