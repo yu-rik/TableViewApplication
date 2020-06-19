@@ -93,6 +93,8 @@ class NewPlaceViewController: UITableViewController {
        // else {
           //  let mapVC = segue.destination as! MapViewController //экземпляр класса MapViewController
        mapVC.incomeSegueIdentifier = identifier
+        mapVC.mapViewControllerDelegate = self
+        
         if identifier == "showMap"{
                     
             //передача текущего заведения на mapVC
@@ -226,4 +228,11 @@ extension NewPlaceViewController : UIImagePickerControllerDelegate, UINavigation
         imageIsChanged = true //картинка не меняется
         dismiss(animated: true)
     }
+}
+extension NewPlaceViewController : MapViewControllerDelegate {
+    func getAddress(_ address: String?) {
+        placeLocation.text = address
+    }
+    
+    
 }

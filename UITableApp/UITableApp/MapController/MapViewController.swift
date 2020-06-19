@@ -10,8 +10,14 @@ import UIKit
 import MapKit
 import CoreLocation //для определения местоположения пользователя
 
+protocol MapViewControllerDelegate {
+    func getAddress(_ address: String?)
+}
 
 class MapViewController: UIViewController {
+   //свойсттво типа протокола MapViewControllerDelegate
+    var mapViewControllerDelegate: MapViewControllerDelegate?
+    
     //для управления действиями с местоположением пользователя создаем экземпляр класса CLLocationManager()
     let locationManager = CLLocationManager()
     
@@ -25,6 +31,9 @@ class MapViewController: UIViewController {
     
     var incomeSegueIdentifier = "" //идентификатор segue - для вызова того или другого segue
     
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var adrressLabel: UILabel!
+    @IBOutlet weak var mapPinImage: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
     @IBAction func Close() {
         dismiss(animated: true) // метод закрывает ViewController  и выгружает его из памяти
@@ -32,13 +41,18 @@ class MapViewController: UIViewController {
     @IBAction func centerVviewInUserLocation() {
            showUserLocation() // позиционирование карты по местоположению пользователя
     }
+    @IBAction func doneButtonPresed() {
+        mapViewControllerDelegate?.getAddress(adrressLabel.text) //передача в getAddress-протокола текущее значение адреса
+        dismiss(animated: true) //после передачи данных закрытие viewController
+    }
+    
     
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        adrressLabel.text = ""
         //подписываем делегата ответственного за выполнения методов протокола MKMapViewDelegate
         //или в storyboard перетянуть лучиком от mapView к mapViewController  и выбрать delegate
         mapView.delegate = self
@@ -52,6 +66,9 @@ class MapViewController: UIViewController {
     private func setupMapView() {
         if incomeSegueIdentifier == "showMap" {
             setUpMark() //вызов метода при переходе на viewController и позиционирование карты по местоположению заведения
+            mapPinImage.isHidden = true //скрываем маркер с карты расположения заведения
+            adrressLabel.isHidden = true
+            doneButton.isHidden = true
         }
     }
     
@@ -157,6 +174,18 @@ class MapViewController: UIViewController {
            }
     }
 
+    //метод для определения координат в центре отображаемой карты
+    private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+        //константа для широты
+        let latitude = mapView.centerCoordinate.latitude
+        
+        //константа для долготы
+        let longitude = mapView.centerCoordinate.longitude
+        
+        //возвращаем координаты точки находящиеся по центру экрана
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
     private func showAlert(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -203,6 +232,49 @@ extension MapViewController : MKMapViewDelegate{
         
         
         return annotationView
+    }
+    
+    //метод для отображения адресса находящиегося в центре карты
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        //определяем координаты центра
+        let center = getCenterLocation(for: mapView)
+        let geocoder = CLGeocoder() // преобразование географических координат и названий
+        // преобразование координат в адресс
+        geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
+            //проверка на наличие ошибок
+            if let error = error{
+                print(error)
+                return
+            }
+            
+            //если ошибок нету присваиваем константе placemarks массив координат
+            guard let placemarks = placemarks else { return }
+            
+            //вытаскиваем из нового массива первый элемент
+            let placemark = placemarks.first
+            
+            //извлекаем улицу и номер дома
+            let streetName = placemark?.thoroughfare //улица
+            let buildNumber = placemark?.subThoroughfare //дом
+        
+            
+            
+            //передаем значения в Label
+            
+            //для обновления данных в основном потоке асинхронно
+            DispatchQueue.main.async {
+                //проверка на nil
+                if streetName != nil && buildNumber != nil {
+                    self.adrressLabel.text = "\(streetName!), \(buildNumber!)"
+                } else if streetName != nil {
+                     self.adrressLabel.text = "\(streetName!)"
+                } else {
+                    self.adrressLabel.text = ""
+                }
+                 
+            }
+           
+        }
     }
 }
 extension MapViewController : CLLocationManagerDelegate {

@@ -275,27 +275,60 @@
                                     <action selector="centerVviewInUserLocation" destination="Pwh-KR-69W" eventType="touchUpInside" id="U0D-yH-IfD"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pin" translatesAutoresizingMaskIntoConstraints="NO" id="k8H-lZ-iI6">
+                                <rect key="frame" x="187" y="408" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ARL-Xc-ukA"/>
+                                    <constraint firstAttribute="width" constant="40" id="XOb-zG-n3X"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current adrress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZT8-mj-ADQ">
+                                <rect key="frame" x="20" y="123" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIH-0N-3ZZ">
+                                <rect key="frame" x="181.5" y="818" width="51" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPresed" destination="Pwh-KR-69W" eventType="touchUpInside" id="j7q-KD-3r6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="i1M-e5-95j" firstAttribute="bottom" secondItem="uXs-bw-WrK" secondAttribute="bottom" id="0zH-Us-lpu"/>
                             <constraint firstItem="WVg-Td-dLH" firstAttribute="trailing" secondItem="uXs-bw-WrK" secondAttribute="trailing" id="5rX-KE-JAD"/>
+                            <constraint firstItem="k8H-lZ-iI6" firstAttribute="centerY" secondItem="WVg-Td-dLH" secondAttribute="centerY" constant="-20" id="61F-Ba-SeV"/>
+                            <constraint firstItem="uXs-bw-WrK" firstAttribute="bottom" secondItem="aIH-0N-3ZZ" secondAttribute="bottom" constant="5" id="9Ie-GT-KTd"/>
                             <constraint firstItem="gke-Vi-0Hv" firstAttribute="leading" secondItem="uXs-bw-WrK" secondAttribute="leading" constant="10" id="HXJ-nE-TDa"/>
                             <constraint firstAttribute="bottom" secondItem="WVg-Td-dLH" secondAttribute="bottom" id="QWU-a3-Qqo"/>
                             <constraint firstItem="WVg-Td-dLH" firstAttribute="top" secondItem="WK3-3m-k4K" secondAttribute="top" id="TSi-CJ-Nc2"/>
                             <constraint firstItem="uXs-bw-WrK" firstAttribute="trailing" secondItem="i1M-e5-95j" secondAttribute="trailing" constant="40" id="dnh-3m-WSa"/>
                             <constraint firstItem="WVg-Td-dLH" firstAttribute="leading" secondItem="uXs-bw-WrK" secondAttribute="leading" id="fH4-rG-d9m"/>
+                            <constraint firstItem="k8H-lZ-iI6" firstAttribute="centerX" secondItem="WVg-Td-dLH" secondAttribute="centerX" id="hLZ-TG-dtp"/>
+                            <constraint firstItem="WVg-Td-dLH" firstAttribute="top" secondItem="ZT8-mj-ADQ" secondAttribute="bottom" constant="-159" id="s4T-nD-WTK"/>
+                            <constraint firstItem="aIH-0N-3ZZ" firstAttribute="centerX" secondItem="WK3-3m-k4K" secondAttribute="centerX" id="sQs-Qa-4k0"/>
+                            <constraint firstItem="uXs-bw-WrK" firstAttribute="trailing" secondItem="ZT8-mj-ADQ" secondAttribute="trailing" constant="20" id="uiY-Vo-Riw"/>
+                            <constraint firstItem="ZT8-mj-ADQ" firstAttribute="leading" secondItem="uXs-bw-WrK" secondAttribute="leading" constant="20" id="xDi-Yj-zQg"/>
                             <constraint firstItem="gke-Vi-0Hv" firstAttribute="top" secondItem="uXs-bw-WrK" secondAttribute="top" constant="8" id="zS5-Nu-ZFH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uXs-bw-WrK"/>
                     </view>
                     <connections>
+                        <outlet property="adrressLabel" destination="ZT8-mj-ADQ" id="nRS-ht-3ZJ"/>
+                        <outlet property="doneButton" destination="aIH-0N-3ZZ" id="GAn-TS-cTR"/>
+                        <outlet property="mapPinImage" destination="k8H-lZ-iI6" id="kLE-3f-fDj"/>
                         <outlet property="mapView" destination="WVg-Td-dLH" id="q2b-co-hA8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFy-pV-CEy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2132" y="236"/>
+            <point key="canvasLocation" x="2131.8840579710145" y="235.71428571428569"/>
         </scene>
         <!--My places-->
         <scene sceneID="dHz-UT-lIq">
@@ -487,13 +520,14 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="195" height="196"/>
+        <image name="Pin" width="42" height="42"/>
         <image name="Placeholder" width="22" height="22"/>
         <image name="cancel" width="128" height="128"/>
         <image name="location" width="128" height="128"/>
         <image name="map" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dT3-vW-cuy"/>
+        <segue reference="fwE-6T-C3N"/>
         <segue reference="Z57-JQ-ijX"/>
     </inferredMetricsTieBreakers>
 </document>
