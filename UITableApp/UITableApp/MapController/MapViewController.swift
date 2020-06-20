@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
     //для управления действиями с местоположением пользователя создаем экземпляр класса CLLocationManager()
     let locationManager = CLLocationManager()
     
-    let regionInMeters = 1_000_000.00
+    let regionInMeters = 5_000.00
     
     
     var place = Place()
@@ -31,16 +31,28 @@ class MapViewController: UIViewController {
     
     var incomeSegueIdentifier = "" //идентификатор segue - для вызова того или другого segue
     
+    //свойство принимающее координаты заведения
+    var placeCoordinate: CLLocationCoordinate2D?
+    
+    @IBOutlet weak var goButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var adrressLabel: UILabel!
     @IBOutlet weak var mapPinImage: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
+    
+    
+    @IBAction func goButtonPressed() {
+        getDirection()
+    }
+    
+    
     @IBAction func Close() {
         dismiss(animated: true) // метод закрывает ViewController  и выгружает его из памяти
     }
     @IBAction func centerVviewInUserLocation() {
            showUserLocation() // позиционирование карты по местоположению пользователя
     }
+    
     @IBAction func doneButtonPresed() {
         mapViewControllerDelegate?.getAddress(adrressLabel.text) //передача в getAddress-протокола текущее значение адреса
         dismiss(animated: true) //после передачи данных закрытие viewController
@@ -64,11 +76,15 @@ class MapViewController: UIViewController {
         
     }
     private func setupMapView() {
+        goButton.isHidden = true
+        
         if incomeSegueIdentifier == "showMap" {
+            
             setUpMark() //вызов метода при переходе на viewController и позиционирование карты по местоположению заведения
             mapPinImage.isHidden = true //скрываем маркер с карты расположения заведения
             adrressLabel.isHidden = true
             doneButton.isHidden = true
+            goButton.isHidden = false
         }
     }
     
@@ -105,6 +121,9 @@ class MapViewController: UIViewController {
                 
                 //привязка анотации к точке на карте
                 annotation.coordinate = placemarkLocation.coordinate
+                //передача координат placemarkLocation свойству placeCoordinate
+                self.placeCoordinate = placemarkLocation.coordinate
+                
                 
                 //задаем видимую область карты - чтоб были видны все созданные аннотации
                 self.mapView.showAnnotations([annotation], animated: true)
@@ -139,6 +158,73 @@ class MapViewController: UIViewController {
         //точность определения местоположения пользователя
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
+    
+    //прокладка маршрута
+    private func getDirection(){
+        //определение координаты местоположения пользователя
+        guard let location = locationManager.location?.coordinate else {
+            showAlert(title: "Error", message: "Current location is not found")
+            return
+        }
+        
+        //запрос на прокладку маршрута
+        // присваиваем результат работы метода настройки маршрута
+        guard let request = createDirectionRequest(from: location) else {
+            showAlert(title: "Error", message: "Destination is not found")
+            return
+        }
+        //создаем маршрут которые имеются в запросе
+        let directions = MKDirections(request: request)
+        
+        //расчет маршрута, возвращение маршрута со всеми данными
+        directions.calculate { (response, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            //извлекаем обработанный маршрут
+            guard let response = response else {
+                self.showAlert(title: "Error", message: "Маршрут недоступен")
+            return }
+            for route in response.routes{
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                
+                //расстояние и время в пути
+                let distance = String(format: "%.1f", route.distance/1000)
+                let timeInterval = route.expectedTravelTime
+                
+                print("Расстояние до места \(distance) км")
+                 print("Время в пути  \(timeInterval) сек")
+            }
+        }
+        
+    }
+    
+    //настройка маршрута
+    private func createDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request?{
+        guard let destinationCoordinate = placeCoordinate else {return nil} //пердаем координаты заведения
+        //определяем местоположение точки для начала маршрута
+        let startingLocation = MKPlacemark(coordinate: coordinate)
+        
+        let destination = MKPlacemark(coordinate: destinationCoordinate)
+        
+        //маршрут от точки А до точки Б
+        let request = MKDirections.Request()
+        
+        //подставляем начальную точку
+        request.source = MKMapItem(placemark: startingLocation)
+        //подставляем конечную точку
+        request.destination = MKMapItem(placemark: destination)
+        //тип транспорта
+        request.transportType = .automobile
+        request.requestsAlternateRoutes = true //позволяет строить альтернативные маршруты
+        
+        //после настройки параметров маршрута - возвращаем request
+        return request
+        
+    }
+    
     
     //метод мониторинга статуса на рарешение использования геопозиции
     private func checkLocationAutorization(){
@@ -275,6 +361,15 @@ extension MapViewController : MKMapViewDelegate{
             }
            
         }
+    }
+    
+    //наложение цветной линии на карту
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        
+        //красим в цвет
+        renderer.strokeColor = .green
+        return renderer
     }
 }
 extension MapViewController : CLLocationManagerDelegate {

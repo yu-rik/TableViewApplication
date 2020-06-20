@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "4GP-ks-CAm"; */
+"4GP-ks-CAm.text" = "Name";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "7yV-J1-Et8"; */
+"7yV-J1-Et8.text" = "Type";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "8Gc-pm-PGX"; */
+"8Gc-pm-PGX.title" = "Item";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "Abt-IF-Hjk"; */
+"Abt-IF-Hjk.text" = "Location";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "E1K-mb-91o"; */
+"E1K-mb-91o.text" = "Name";
+
+/* Class = "UITextField"; placeholder = "Place type"; ObjectID = "NhK-h9-iR5"; */
+"NhK-h9-iR5.placeholder" = "Place type";
+
+/* Class = "UISegmentedControl"; PwB-r8-ZnY.segmentTitles[0] = "Date"; ObjectID = "PwB-r8-ZnY"; */
+"PwB-r8-ZnY.segmentTitles[0]" = "Date";
+
+/* Class = "UISegmentedControl"; PwB-r8-ZnY.segmentTitles[1] = "Name"; ObjectID = "PwB-r8-ZnY"; */
+"PwB-r8-ZnY.segmentTitles[1]" = "Name";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "Qny-L8-f7p"; */
+"Qny-L8-f7p.text" = "Location";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "SpX-6N-cNy"; */
+"SpX-6N-cNy.text" = "Type";
+
+/* Class = "UILabel"; text = "Current adrress"; ObjectID = "ZT8-mj-ADQ"; */
+"ZT8-mj-ADQ.text" = "Current adrress";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "aIH-0N-3ZZ"; */
+"aIH-0N-3ZZ.normalTitle" = "Done";
+
+/* Class = "UINavigationItem"; title = "New place"; ObjectID = "dUS-ym-M48"; */
+"dUS-ym-M48.title" = "New place";
+
+/* Class = "UITextField"; placeholder = "Place name"; ObjectID = "gom-e9-2qa"; */
+"gom-e9-2qa.placeholder" = "Place name";
+
+/* Class = "UINavigationItem"; title = "My places"; ObjectID = "toS-2g-YB6"; */
+"toS-2g-YB6.title" = "My places";
+
+/* Class = "UITextField"; placeholder = "Place location"; ObjectID = "va4-Ac-cbi"; */
+"va4-Ac-cbi.placeholder" = "Place location";
