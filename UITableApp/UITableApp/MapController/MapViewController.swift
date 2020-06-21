@@ -34,6 +34,10 @@ class MapViewController: UIViewController {
     //свойство принимающее координаты заведения
     var placeCoordinate: CLLocationCoordinate2D?
     
+    //свойство для хранения предыдущего местороложения пользователя
+    var previousLocation: CLLocation?
+    
+    
     @IBOutlet weak var goButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var adrressLabel: UILabel!
@@ -166,6 +170,11 @@ class MapViewController: UIViewController {
             showAlert(title: "Error", message: "Current location is not found")
             return
         }
+        
+        //включение режимма отслеживания постоянного местоположения пользователя
+        locationManager.startUpdatingLocation()
+        // постройка маршрутов не реализовано!!!!
+        previousLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
         
         //запрос на прокладку маршрута
         // присваиваем результат работы метода настройки маршрута
